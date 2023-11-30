@@ -168,7 +168,7 @@ class Basket
                 // Save the updated XML back to the file
                 $xml->asXML($storeXml);
             } else {
-                throw new Exception\FileNotFoundException("No product found with SKU: \"{$product->product->sku}\"");
+                throw new Exception\ProductNotFoundException("No product found with SKU: \"{$product->product->sku}\"");
             }
         }
 

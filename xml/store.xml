@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<store>
+  <products>
+    <product sku="ST01" name="Strawberries" price="5.99"/>
+    <product sku="CH01" name="Chocolate" price="2.99"/>
+    <product sku="AP01" name="Apple" price="0.50"/>
+    <product sku="OR01" name="Oranges" price="0.4"/>
+    <product sku="BA01" name="Bacon" price="1.99"/>
+  </products>
+  <inventory>
+    <product sku="ST01" amount="5"/>
+    <product sku="CH01" amount="2"/>
+    <product sku="AP01" amount="10"/>
+    <product sku="OR01" amount="20"/>
+    <product sku="BA01" amount="5"/>
+  </inventory>
+</store>

@@ -1,0 +1,18 @@
+{
+    "name": "gloversure/2022-php-challenge",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Gloversure\\Store\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Stephen James",
+            "email": "spj@gloversure.co.uk"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^10"
+    }
+}

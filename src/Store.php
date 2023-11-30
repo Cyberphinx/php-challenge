@@ -9,7 +9,14 @@ final class Store
      */
     private $products = [];
 
+    /**
+     * @var string $storeXmlPath
+     */
     private $storeXmlPath = '';
+
+    /**
+     * @var \SimpleXMLElement|null $storeContext
+     */
     private $storeContext = null;
 
     public function __construct(string $storeXml)
@@ -30,11 +37,13 @@ final class Store
      * Get a product from the store
      * 
      * @param string $sku
+     * @param string $name
+     * @param int $quantity
+     * @param float $price
      * 
-     * @return Product
-     * @throws Exception\ProductNotFoundException
+     * @return string
      */
-    public function addProduct(string $sku, string $name, int $quantity, float $price ): string
+    public function addProduct(string $sku, string $name, int $quantity, float $price): string
     {
         if (!isset($this->products[$sku])) {
             // if product sku doesn't exist, we add new product

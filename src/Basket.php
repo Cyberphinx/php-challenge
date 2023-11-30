@@ -82,6 +82,8 @@ class Basket
     /** 
     * Calculate the total price of items when buy one get one free    
     * 
+    * @param Basket\Product $product
+    *
     * @return float
     * */
     protected function halfPriceTotal(Basket\Product $product): float
@@ -100,6 +102,8 @@ class Basket
 
     /** 
     * Calculate the total price of strawberries with bulk buy offer    
+    *
+    * @param Basket\Product $strawberry
     * 
     * @return float
     * */
@@ -119,6 +123,8 @@ class Basket
     /** 
     * Calculate the total price of two types of products
     * with buy one get one free offer where the cheaper product is free
+    *
+    * @param Array<Basket\Product>
     * 
     * @return float
     * */
@@ -126,7 +132,10 @@ class Basket
     {
         $totalPrice = 0;
         
-        // get each of the two products
+        /**
+         * @var Basket\Product $product1 The first product in the array
+         * @var Basket\Product $product2 The second product in the array
+         */
         $product1 = array_values($products)[0];
         $product2 = array_values($products)[1];
 
@@ -145,6 +154,8 @@ class Basket
 
     /**
      * Checkout method that updates the stock quantities of basket items
+     *
+     * @param string $storeXml
      * 
      * @return void
      */

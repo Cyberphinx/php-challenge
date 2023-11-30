@@ -28,16 +28,18 @@ class Basket
      */
     public function addItems(Product $product, int $quantity = 0): void
     {
-        if (isset($this->products[$product->sku]))
+        if (isset($this->products[$product->sku]) && $product->amountInStock >= $quantity)
             $this->products[$product->sku]->quantity += $quantity;
-        else {
+        else if ($product->amountInStock >= $quantity) {
             $newProduct = new Basket\Product(
                 $product,
                 $quantity,
             );
 
             $this->products[$product->sku] = $newProduct;
-        }       
+        } else {
+            echo " Not enough $product->name in stock\n";
+        }    
         $this->calculateTotal();
     }
 
@@ -75,7 +77,6 @@ class Basket
                 default => $product->product->price * $product->quantity,
             };
         }
-        
     }
 
     /** 
@@ -133,14 +134,46 @@ class Basket
         if ($product1->product->price > $product2->product->price) {
             $halfPriceTotal = $this->halfPriceTotal($product2);
             $totalPrice = ($product1->quantity * $product1->product->price) + $halfPriceTotal;
-            // $totalPrice -= $freeProduct2 * $product2->product->price;
         } else if ($product2->product->price > $product1->product->price) {
             $halfPriceTotal = $this->halfPriceTotal($product1);
             $totalPrice = ($product2->quantity * $product2->product->price) + $halfPriceTotal;
-            // $totalPrice -= $freeProduct1 * $product1->product->price;
         }
 
         return $totalPrice;
     }
+
+
+    /**
+     * Checkout method that updates the stock quantities of basket items
+     * 
+     * @return void
+     */
+    public function checkout(string $storeXml): void
+    {
+        if (!file_exists($storeXml))
+            throw new Exception\FileNotFoundException("Store XML \"{$storeXml}\" doesn't exist");
+
+        $contents = file_get_contents($storeXml);
+        $xml = new \SimpleXMLElement($contents);
+
+        /** @var Basket\Product $product */
+        foreach ($this->products as $product) {
+            $sku = $product->product->sku;
+            $stockProducts = $xml->xpath("//inventory/product[@sku='$sku']");
+            if (!empty($stockProducts)) {
+                $stock = $stockProducts[0];
+                // update quantity
+                $stock['amount'] -= $product->quantity;
+
+                // Save the updated XML back to the file
+                $xml->asXML($storeXml);
+            } else {
+                throw new Exception\FileNotFoundException("No product found with SKU: \"{$product->product->sku}\"");
+            }
+        }
+
+    }
+
+
 
 }

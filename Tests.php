@@ -18,16 +18,17 @@ require_once($autoloadPath);
 final class Tests extends TestCase
 {
     private $store;
+    private $path;
 
     protected function setUp(): void
     {
-        $path = [
+        $this->path = [
             __DIR__,
             'xml',
             'store.xml',
         ];
 
-        $this->store = new \Gloversure\Store\Store(implode(DIRECTORY_SEPARATOR, $path));
+        $this->store = new \Gloversure\Store\Store(implode(DIRECTORY_SEPARATOR, $this->path));
     }
 
     public function test1(): void
@@ -38,6 +39,7 @@ final class Tests extends TestCase
             $this->store->getProduct('CH01'),
             2
         );
+        $basket->checkout(implode(DIRECTORY_SEPARATOR, $this->path));
 
         $this->assertSame(2.99, $basket->total);
     }
@@ -50,6 +52,7 @@ final class Tests extends TestCase
             $this->store->getProduct('CH01'),
             4
         );
+        $basket->checkout(implode(DIRECTORY_SEPARATOR, $this->path));
 
         $this->assertSame(5.98, $basket->total);
     }
@@ -62,6 +65,7 @@ final class Tests extends TestCase
             $this->store->getProduct('ST01'),
             6
         );
+        $basket->checkout(implode(DIRECTORY_SEPARATOR, $this->path));
 
         $this->assertSame(23.94, $basket->total);
     }
@@ -78,6 +82,7 @@ final class Tests extends TestCase
             $this->store->getProduct('CH01'),
             4
         );
+        $basket->checkout(implode(DIRECTORY_SEPARATOR, $this->path));
 
         $this->assertSame(21.94, $basket->total);
     }
@@ -103,6 +108,7 @@ final class Tests extends TestCase
             $this->store->getProduct('BA01'),
             2
         );
+        $basket->checkout(implode(DIRECTORY_SEPARATOR, $this->path));
 
         $this->assertSame(5.18, $basket->total);
     }
